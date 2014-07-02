@@ -133,6 +133,7 @@ public class AccountSettingsFragment extends PreferenceFragment
     private CheckBoxPreference mAccountBackgroundAttachments;
     private CheckBoxPreference mInboxNotify;
     private CheckBoxPreference mInboxVibrate;
+    private CheckBoxPreference mInboxHeadsUp;
     private CheckBoxPreference mInboxNotifyEveryMessage;
     private Preference mInboxRingtone;
     private PreferenceCategory mNotificationsCategory;
@@ -416,6 +417,12 @@ public class AccountSettingsFragment extends PreferenceFragment
             mInboxFolderPreferences.setNotificationVibrateEnabled(vibrateSetting);
             preferenceChanged(FolderPreferences.PreferenceKeys.NOTIFICATION_VIBRATE, newValue);
             return true;
+        } else if (FolderPreferences.PreferenceKeys.NOTIFICATION_HEADS_UP.equals(key)) {
+            final boolean headsUpSetting = (Boolean) newValue;
+            mInboxHeadsUp.setChecked(headsUpSetting);
+            mInboxFolderPreferences.setNotificationHeadsUpEnabled(headsUpSetting);
+            preferenceChanged(FolderPreferences.PreferenceKeys.NOTIFICATION_HEADS_UP, newValue);
+            return true;
         } else if (FolderPreferences.PreferenceKeys.NOTIFICATION_NOTIFY_EVERY_MESSAGE.equals(key)) {
             final boolean notifyEveryMessageSetting = (Boolean) newValue;
             mInboxNotifyEveryMessage.setChecked(notifyEveryMessageSetting);
@@ -664,6 +671,8 @@ public class AccountSettingsFragment extends PreferenceFragment
                                     mInboxFolderPreferences.areNotificationsEnabled());
                             mInboxVibrate.setChecked(
                                     mInboxFolderPreferences.isNotificationVibrateEnabled());
+                            mInboxHeadsUp.setChecked(
+                                    mInboxFolderPreferences.isNotificationHeadsUpEnabled());
                             mInboxNotifyEveryMessage.setChecked(
                                     mInboxFolderPreferences.isEveryMessageNotificationEnabled());
                             setRingtoneSummary();
@@ -851,6 +860,10 @@ public class AccountSettingsFragment extends PreferenceFragment
 
         mNotificationsCategory =
                 (PreferenceCategory) findPreference(PREFERENCE_CATEGORY_NOTIFICATIONS);
+
+        mInboxHeadsUp = (CheckBoxPreference) findPreference(
+                FolderPreferences.PreferenceKeys.NOTIFICATION_HEADS_UP);
+        mInboxHeadsUp.setOnPreferenceChangeListener(this);
 
         // Set the vibrator value, or hide it on devices w/o a vibrator
         mInboxVibrate = (CheckBoxPreference) findPreference(
