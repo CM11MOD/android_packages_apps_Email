@@ -20,4 +20,8 @@
   <string name="account_setup_options_mail_check_frequency_2hour">每 2 小時</string>
   <string name="account_setup_options_mail_check_frequency_4hour">每 4 小時</string>
   <string name="account_setup_options_mail_check_frequency_1day">每天</string>
+
+    <!-- Heads up -->
+    <string name="account_settings_heads_up_label">浮動通知模式</string>
+    <string name="account_settings_heads_up_summary">以浮動視窗顯示這個帳戶信息或提示</string>
 </resources>
